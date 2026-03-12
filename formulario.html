@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Teletrabajo - Universidad de Sevilla</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --us-red: #a40133;
+            --us-red-light: #be0f2e;
+            --us-gold: #f9b905;
+            --us-gold-light: #ee9105;
+            --us-charcoal: #3c3c3b;
+            --us-gray: #c5c5c5;
+            --us-teal: #009e93;
+            --us-green: #93bd22;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.85);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: var(--us-charcoal);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--us-red);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--us-gold);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo span {
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--us-gold);
+        }
+
+        /* Page Layout */
+        .container {
+            max-width: 1000px;
+            margin: 4rem auto;
+            padding: 0 5%;
+        }
+
+        .form-header {
+            background: var(--us-red);
+            color: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .unit-info {
+            background: var(--white);
+            padding: 1.5rem 2.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .unit-info .unit-name {
+            font-weight: 700;
+            color: var(--us-red);
+        }
+
+        .unit-info .manager {
+            font-size: 0.9rem;
+            color: var(--us-charcoal);
+        }
+
+        /* Form Table */
+        .form-body {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .positions-list {
+            margin-top: 1rem;
+        }
+
+        .position-item {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+        }
+
+        .position-item:hover {
+            background-color: #fcfcfc;
+        }
+
+        .position-item:last-child {
+            border-bottom: none;
+        }
+
+        .position-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .position-name {
+            font-weight: 600;
+            color: var(--us-charcoal);
+        }
+
+        .position-role {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Switch Styling */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--us-teal);
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px var(--us-teal);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        /* Form Footer */
+        .form-actions {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .btn-submit {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background-color: var(--us-red);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--us-gold);
+            box-shadow: 0 5px 15px rgba(249, 185, 5, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--us-charcoal);
+            color: var(--white);
+            padding: 4rem 10% 2rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: var(--us-gold);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--us-gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            font-size: 0.9rem;
+            color: var(--us-gray);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .form-header h1 { font-size: 1.5rem; }
+            .unit-info { flex-direction: column; text-align: center; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="logo_us_neg.png" alt="Logo Universidad de Sevilla">
+            Dirección de <span>Recursos Humanos</span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="formulario.html">Gestión de Unidad</a>
+            <a href="index.html#contacto">Contacto</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="form-header">
+            <h1>Identificación de Puestos</h1>
+            <p>Seleccione los puestos de su unidad susceptibles de acogerse a la modalidad de teletrabajo.</p>
+        </header>
+
+        <div class="unit-info">
+            <div class="unit-name"><i class="fa-solid fa-sitemap"></i> Unidad: Servicio de Gestión de Personal</div>
+            <div class="manager"><i class="fa-solid fa-user-tie"></i> Responsable: Juan Méndez</div>
+        </div>
+
+        <form class="form-body">
+            <div class="positions-list">
+                <!-- 1 -->
+                <div class="position-item">
+                    <div class="position-details">
+                        <span class="position-name">Juan Méndez</span>
+                        <span class="position-role">Jefe de Servicio Retribuciones</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <!-- 2 -->
+                <div class="position-item">
+                    <div class="position-details">
+                        <span class="position-name">María Rivas</span>
+                        <span class="position-role">Responsable de Unidad</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <!-- 3 -->
+                <div class="position-item">
+                    <div class="position-details">
+                        <span class="position-name">Amparo Flores</span>
+                        <span class="position-role">Auxiliar administrativa</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <!-- 4 -->
+                <div class="position-item">
+                    <div class="position-details">
+                        <span class="position-name">Pedro Sánchez</span>
+                        <span class="position-role">Técnico de Gestión</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <!-- 5 -->
+                <div class="position-item">
+                    <div class="position-details">
+                        <span class="position-name">Elena Gómez</span>
+                        <span class="position-role">Administrativa</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <!-- 6 -->
+                <div class="position-item">
+                    <div class="position-details">
+                        <span class="position-name">Luis Moreno</span>
+                        <span class="position-role">Programador</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <!-- 7 -->
+                <div class="position-item">
+                    <div class="position-details">
+                        <span class="position-name">Sofía Ruiz</span>
+                        <span class="position-role">Analista de Sistemas</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <!-- 8 -->
+                <div class="position-item">
+                    <div class="position-details">
+                        <span class="position-name">Carlos Marín</span>
+                        <span class="position-role">Auxiliar de Servicios</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <!-- 9 -->
+                <div class="position-item">
+                    <div class="position-details">
+                        <span class="position-name">Isabel Castro</span>
+                        <span class="position-role">Coordinadora de Área</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <!-- 10 -->
+                <div class="position-item">
+                    <div class="position-details">
+                        <span class="position-name">Ricardo Vila</span>
+                        <span class="position-role">Técnico Auxiliar</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <!-- 11 -->
+                <div class="position-item">
+                    <div class="position-details">
+                        <span class="position-name">Lucía Santos</span>
+                        <span class="position-role">Gestora Administrativa</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <!-- 12 -->
+                <div class="position-item">
+                    <div class="position-details">
+                        <span class="position-name">Marcos Peña</span>
+                        <span class="position-role">Jefe de Sección</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <!-- 13 -->
+                <div class="position-item">
+                    <div class="position-details">
+                        <span class="position-name">Sara Blanco</span>
+                        <span class="position-role">Administrativa de Soporte</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <!-- 14 -->
+                <div class="position-item">
+                    <div class="position-details">
+                        <span class="position-name">Fernando Díaz</span>
+                        <span class="position-role">Técnico Especialista</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <!-- 15 -->
+                <div class="position-item">
+                    <div class="position-details">
+                        <span class="position-name">Marta Soler</span>
+                        <span class="position-role">Responsable de Negociado</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">Guardar Selección</button>
+            </div>
+        </form>
+    </div>
+
+    <footer id="contacto">
+        <div class="footer-logo">Dirección de Recursos Humanos - Universidad de Sevilla</div>
+        <div class="footer-links">
+            <a href="https://recursoshumanos.us.es/">Portal Dirección de Recursos Humanos</a>
+            <a href="https://recursoshumanos.us.es/intranet/">Intranet del PTGAS</a>
+            <a href="https://transparencia.us.es/">Portal de Transparencia</a>
+            <a href="https://osi.us.es/politicas-y-normativas/politica-de-proteccion-de-datos">Política de Privacidad</a>
+        </div>
+        <div class="copyright">
+            &copy; 2026 Universidad de Sevilla - Dirección de Recursos Humanos - Gestión de Teletrabajo.
+        </div>
+    </footer>
+
+</body>
+</html>
