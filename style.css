@@ -51,7 +51,6 @@ nav {
 .logo img {
 	height: 50px;
 	width: auto;
-	margin-right: 50px;
 }
 
 .logo span {
@@ -414,6 +413,7 @@ footer {
 .footer-logo img {
 	height: 80px;
 	width: auto;
+	margin-right: 50px;
 }
 
 .footer-links {
