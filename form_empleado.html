@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Selección Puestos Teletrabajo - Universidad de Sevilla</title>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+	<nav>
+		<a href="index.html" class="logo">
+			<img src="logo_us_neg.png" alt="Logo Universidad de Sevilla">
+			Dirección de <span>Recursos Humanos</span>
+		</a>
+		<div class="nav-links">
+			<a href="index.html">Inicio</a>
+			<a href="form_responsable.html">Responsable</a>
+			<a href="form_empleado.html">Empleado/a</a>
+		</div>
+	</nav>
+
+	<div class="container">
+		<header class="form-header">
+			<h1>Mi Solicitud de Teletrabajo</h1>
+			<p>Complete los datos para solicitar la modalidad de teletrabajo en su puesto.</p>
+		</header>
+
+		<div class="unit-info">
+			<div class="unit-name"><i class="fa-solid fa-user"></i> Empleado/a: Amparo Flores</div>
+			<div class="manager"><i class="fa-solid fa-sitemap"></i> Unidad: Servicio de Gestión de Personal</div>
+		</div>
+
+		<form class="form-body">
+			<div style="margin-bottom: 2rem;">
+				<h3 style="color: var(--us-red); margin-bottom: 1rem;">Datos del Puesto</h3>
+				<p><strong>Puesto:</strong> Auxiliar administrativa</p>
+				<p><strong>Código:</strong> F123456</p>
+			</div>
+
+			<div style="margin-bottom: 2rem;">
+				<h3 style="color: var(--us-red); margin-bottom: 1rem;">Plan de Trabajo Propuesto</h3>
+				<p style="font-size: 0.9rem; margin-bottom: 1rem; color: #666;">Indique qué días de la semana propone realizar teletrabajo (máximo 3 días).</p>
+				
+				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 1rem; margin-top: 1rem;">
+					<label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+						<input type="checkbox" name="dias" value="L"> Lunes
+					</label>
+					<label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+						<input type="checkbox" name="dias" value="M"> Martes
+					</label>
+					<label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+						<input type="checkbox" name="dias" value="X"> Miércoles
+					</label>
+					<label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+						<input type="checkbox" name="dias" value="J"> Jueves
+					</label>
+					<label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+						<input type="checkbox" name="dias" value="V"> Viernes
+					</label>
+				</div>
+			</div>
+
+			<div class="form-actions">
+				<button type="submit" class="btn-submit">Enviar Solicitud</button>
+			</div>
+		</form>
+	</div>
+
+	<footer id="contacto">
+		<div class="footer-logo">
+			<img src="logo_us_neg_0.png" alt="Logo Universidad de Sevilla">
+			Dirección de Recursos Humanos - Universidad de Sevilla
+		</div>
+		<div class="footer-links">
+			<a href="https://recursoshumanos.us.es/">Portal Dirección de Recursos Humanos</a>
+			<a href="https://recursoshumanos.us.es/intranet/">Intranet del PTGAS</a>
+			<a href="https://transparencia.us.es/">Portal de Transparencia</a>
+			<a href="https://osi.us.es/politicas-y-normativas/politica-de-proteccion-de-datos">Política de
+				Privacidad</a>
+		</div>
+		<div class="copyright">
+			&copy; 2026 Universidad de Sevilla - Dirección de Recursos Humanos - Gestión de Teletrabajo.
+		</div>
+	</footer>
+
+</body>
+
+</html>
