@@ -76,7 +76,7 @@ nav {
 /* Hero Section (index.html) */
 .hero {
 	position: relative;
-	height: 80vh;
+	height: 60vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -92,7 +92,7 @@ nav {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('teletrabajo_us_premium.png');
+	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/teletrabajo_us_premium.png');
 	background-size: cover;
 	background-position: center;
 	z-index: -1;
@@ -178,7 +178,7 @@ section {
 
 .card {
 	background: var(--glass);
-	padding: 2.5rem;
+	padding: 1.5rem;
 	border-radius: 15px;
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 	transition: transform 0.3s;
@@ -240,7 +240,7 @@ section {
 .form-header {
 	background: var(--us-red);
 	color: var(--white);
-	padding: 2.5rem;
+	padding: 1.5rem;
 	border-radius: 15px 15px 0 0;
 	text-align: center;
 	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -441,6 +441,145 @@ footer {
 	color: var(--us-gray);
 }
 
+/* Intranet Specific Styles */
+.intranet-hero {
+	height: 45vh;
+	background-attachment: fixed;
+}
+
+.ai-search-container {
+	margin-top: 2.5rem;
+	width: 100%;
+	max-width: 700px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.ai-search-wrapper {
+	background: var(--glass);
+	padding: 0.5rem;
+	border-radius: 50px;
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	backdrop-filter: blur(15px);
+	padding-left: 1.5rem;
+}
+
+.ai-search-wrapper i {
+	color: var(--us-red);
+	font-size: 1.2rem;
+}
+
+.ai-search-wrapper input {
+	flex: 1;
+	background: transparent;
+	border: none;
+	outline: none;
+	padding: 1rem 0;
+	font-size: 1.1rem;
+	color: var(--us-charcoal);
+}
+
+.ai-search-btn {
+	background: var(--us-red);
+	color: var(--white);
+	border: none;
+	padding: 0.8rem 2rem;
+	border-radius: 40px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.3s;
+}
+
+.ai-search-btn:hover {
+	background: var(--us-gold);
+	transform: scale(1.05);
+}
+
+.intranet-grid {
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.service-card {
+	padding: 1.2rem;
+	min-height: 160px;
+	justify-content: center;
+	border: 1px solid rgba(164, 1, 51, 0.1);
+}
+
+.service-card:hover {
+	background: var(--white);
+	border-color: var(--us-gold);
+}
+
+/* Intranet Footer */
+.intranet-footer {
+	background: #1a1a1a;
+	padding: 5rem 10% 2rem;
+}
+
+.footer-grid {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 4rem;
+	align-items: center;
+	margin-bottom: 3rem;
+	text-align: left;
+}
+
+.footer-links-container {
+	display: flex;
+	gap: 5rem;
+}
+
+.footer-column h4 {
+	color: var(--white);
+	margin-bottom: 1.5rem;
+	font-size: 1.1rem;
+	border-left: 3px solid var(--us-gold);
+	padding-left: 1rem;
+}
+
+.footer-column {
+	display: flex;
+	flex-direction: column;
+	gap: 0.8rem;
+}
+
+.footer-column a {
+	color: var(--us-gray);
+	text-decoration: none;
+	transition: color 0.3s;
+}
+
+.footer-column a:hover {
+	color: var(--us-gold);
+}
+
+@media (max-width: 992px) {
+	.footer-grid {
+		grid-template-columns: 1fr;
+		text-align: center;
+		justify-items: center;
+	}
+
+	.footer-links-container {
+		gap: 3rem;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	
+	.footer-column h4 {
+		border-left: none;
+		border-bottom: 3px solid var(--us-gold);
+		padding-left: 0;
+		padding-bottom: 0.5rem;
+		display: inline-block;
+	}
+}
 /* Animations */
 @keyframes fadeInUp {
 	from {
@@ -477,4 +616,54 @@ footer {
 		text-align: center;
 		gap: 0.5rem;
 	}
+}
+
+/* Quienes Somos Styles */
+.card-left {
+	text-align: left;
+	align-items: flex-start;
+	max-width: 800px;
+	margin: 2rem auto;
+}
+
+.org-intro-text {
+	font-size: 1.1rem;
+	margin-bottom: 1.5rem;
+}
+
+.units-container {
+	background: rgba(255, 255, 255, 0.5);
+	border: 1px solid rgba(0, 0, 0, 0.05);
+	border-radius: 12px;
+	padding: 1.5rem;
+	width: 100%;
+	margin-top: 1rem;
+	box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.units-list {
+	list-style: none;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 1.2rem;
+}
+
+.units-list li {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 0.5rem;
+	transition: all 0.3s;
+	font-size: 0.95rem;
+}
+
+.units-list li:hover {
+	transform: translateX(8px);
+	color: var(--us-red);
+}
+
+.units-list li i {
+	color: var(--us-red);
+	font-size: 0.8rem;
 }
