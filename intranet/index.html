@@ -17,7 +17,12 @@
 			<img src="../assets/img/logo_us_neg.png" alt="Logo Universidad de Sevilla">
 			Intranet del <span>PTGAS</span>
 		</div>
-		<div class="nav-links">
+		<button class="mobile-menu-toggle" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="main-nav">
+			<span class="hamburger-line"></span>
+			<span class="hamburger-line"></span>
+			<span class="hamburger-line"></span>
+		</button>
+		<div class="nav-links" id="main-nav">
 			<a href="../index.html">Inicio</a>
 			<a href="#">Mi Perfil</a>
 			<a href="#">Ayuda</a>
@@ -33,8 +38,8 @@
 			
 			<div class="ai-search-container">
 				<div class="ai-search-wrapper">
-					<i class="fa-solid fa-magnifying-glass"></i>
-					<input type="text" placeholder="¿En qué puedo ayudarte hoy?" id="ai-search">
+					<i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+					<input type="text" placeholder="¿En qué puedo ayudarte hoy?" id="ai-search" aria-label="Buscar en la intranet">
 					<button class="ai-search-btn">Buscar</button>
 				</div>
 			</div>
@@ -132,6 +137,21 @@
 		</div>
 	</footer>
 
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+			const navLinks = document.getElementById('main-nav');
+
+			if (mobileMenuToggle && navLinks) {
+				mobileMenuToggle.addEventListener('click', () => {
+					const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+					mobileMenuToggle.setAttribute('aria-expanded', !isExpanded);
+					navLinks.classList.toggle('active');
+					mobileMenuToggle.classList.toggle('active');
+				});
+			}
+		});
+	</script>
 </body>
 
 </html>
