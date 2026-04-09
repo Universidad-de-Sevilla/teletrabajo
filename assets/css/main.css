@@ -746,3 +746,275 @@ a:focus-visible, button:focus-visible, input:focus-visible, .service-card:focus-
 	color: var(--us-red);
 	font-size: 0.8rem;
 }
+
+/* =========================================
+   Convocatorias / Dashboard Styles
+   ========================================= */
+
+.page-header {
+	background: var(--us-red);
+	color: var(--white);
+	padding: 4rem 10% 6rem; /* Extra padding at bottom for overlap effect */
+	text-align: left;
+}
+.page-header h1 {
+	font-size: 2.5rem;
+	margin-bottom: 0.5rem;
+}
+.page-header p {
+	font-size: 1.1rem;
+	opacity: 0.9;
+}
+
+.dashboard-container {
+	max-width: 1200px;
+	margin: -3rem auto 4rem; /* Minus margin to overlap the red header */
+	padding: 0 5%;
+	position: relative;
+	z-index: 10;
+}
+
+/* Filter Card */
+.filter-card {
+	background: var(--white);
+	border-radius: 12px;
+	padding: 1.5rem 2rem;
+	box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+	margin-bottom: 2rem;
+}
+.filter-header {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-weight: 600;
+	font-size: 1.2rem;
+	margin-bottom: 1.5rem;
+	color: var(--us-charcoal);
+}
+.filter-header i {
+	color: var(--us-red);
+}
+.filter-controls {
+	display: flex;
+	gap: 1.5rem;
+	align-items: flex-end;
+	flex-wrap: wrap;
+}
+.filter-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	flex: 1;
+	min-width: 200px;
+}
+.filter-group label {
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #666;
+}
+.filter-group select {
+	padding: 0.8rem 1rem;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	font-size: 1rem;
+	font-family: 'Inter', sans-serif;
+	color: var(--us-charcoal);
+	outline: none;
+	background-color: var(--white);
+	transition: border-color 0.3s;
+	appearance: auto;
+}
+.filter-group select:focus {
+	border-color: var(--us-red);
+}
+.btn-apply {
+	background: var(--us-red);
+	color: var(--white);
+	border: none;
+	padding: 0.8rem 2rem;
+	border-radius: 8px;
+	font-weight: 600;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: all 0.3s;
+	height: 48px;
+}
+.btn-apply:hover {
+	background: var(--us-gold);
+}
+
+/* Stats Cards */
+.stats-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 1.5rem;
+	margin-bottom: 2rem;
+}
+.stat-card {
+	background: var(--white);
+	border-radius: 12px;
+	padding: 1.5rem 2rem;
+	box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.stat-info {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+.stat-label {
+	color: #666;
+	font-size: 0.95rem;
+	font-weight: 500;
+}
+.stat-value {
+	font-size: 2.8rem;
+	font-weight: 700;
+	line-height: 1;
+}
+.stat-value.red { color: var(--us-red); }
+.stat-value.gold { color: var(--us-gold); }
+
+.stat-icon {
+	width: 60px;
+	height: 60px;
+	border-radius: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.8rem;
+}
+.stat-icon.red {
+	background: rgba(164, 1, 51, 0.08);
+	color: var(--us-red);
+}
+.stat-icon.gold {
+	background: rgba(249, 185, 5, 0.1);
+	color: var(--us-gold);
+}
+
+/* Convocatorias List */
+.convocatoria-card {
+	background: var(--white);
+	border-radius: 12px;
+	padding: 2rem;
+	box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+	margin-bottom: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.2rem;
+	transition: transform 0.2s, box-shadow 0.2s;
+	border-left: 4px solid transparent;
+}
+.convocatoria-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+.convocatoria-header {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+}
+.badge {
+	padding: 0.4rem 1.2rem;
+	border-radius: 50px;
+	font-size: 0.85rem;
+	font-weight: 600;
+}
+.badge.gold {
+	background: rgba(249, 185, 5, 0.15);
+	color: #9c7100;
+}
+.badge.green {
+	background: rgba(147, 189, 34, 0.2);
+	color: #4a6311;
+}
+
+.convocatoria-body {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 2rem;
+	flex-wrap: wrap;
+}
+.convocatoria-info h3 {
+	font-size: 1.4rem;
+	color: var(--us-charcoal);
+	margin-bottom: 0.8rem;
+}
+.convocatoria-meta {
+	display: flex;
+	gap: 1.5rem;
+	color: #666;
+	font-size: 0.95rem;
+	flex-wrap: wrap;
+}
+.convocatoria-meta span {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+.convocatoria-actions {
+	display: flex;
+	gap: 1rem;
+}
+.btn-outline {
+	background: var(--us-red);
+	color: var(--white);
+	border: none;
+	padding: 0.8rem 1.5rem;
+	border-radius: 8px;
+	font-weight: 600;
+	text-decoration: none;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	transition: all 0.3s;
+}
+.btn-outline:hover {
+	background: var(--us-red-light);
+}
+.btn-solid {
+	background: var(--us-gold);
+	color: var(--white);
+	border: none;
+	padding: 0.8rem 1.5rem;
+	border-radius: 8px;
+	font-weight: 600;
+	text-decoration: none;
+	transition: all 0.3s;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+.btn-solid:hover {
+	background: var(--us-gold-light);
+	box-shadow: 0 4px 10px rgba(249, 185, 5, 0.3);
+}
+
+@media (max-width: 768px) {
+	.filter-controls {
+		flex-direction: column;
+		align-items: stretch;
+	}
+	.btn-apply {
+		width: 100%;
+	}
+	.page-header {
+		padding: 3rem 5% 5rem;
+	}
+	.convocatoria-body {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.convocatoria-actions {
+		width: 100%;
+		flex-direction: column;
+	}
+	.convocatoria-actions a {
+		text-align: center;
+		justify-content: center;
+	}
+}
