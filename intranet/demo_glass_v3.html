@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glass V3 - Floating Scenes US</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --us-red: #a40133;
+            --us-gold: #f9b905;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            padding: 5rem 10%;
+            background: #050505; /* Black for maximum contrast */
+            color: white;
+            min-height: 100vh;
+        }
+
+        .glass-v3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .card-v3-scene {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 40px;
+            height: 450px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: all 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+            text-decoration: none;
+            color: white;
+        }
+
+        .card-v3-scene:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(164, 1, 51, 0.5);
+            box-shadow: 0 50px 100px rgba(164, 1, 51, 0.2);
+        }
+
+        /* Elaborated Icon Scene */
+        .scene-container {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 250px;
+            pointer-events: none;
+        }
+
+        .main-icon {
+            font-size: 8rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            color: white;
+            filter: drop-shadow(0 0 20px rgba(164, 1, 51, 0.5));
+            transition: all 0.6s;
+        }
+
+        .sub-icon {
+            font-size: 3rem;
+            position: absolute;
+            color: var(--us-gold);
+            opacity: 0.3;
+            transition: all 0.8s;
+        }
+
+        .sub-1 { top: 0; right: 0; animation: float1 4s infinite alternate; }
+        .sub-2 { bottom: 0; left: 0; animation: float2 5s infinite alternate; }
+
+        @keyframes float1 { from { transform: translate(0,0) rotate(0deg); } to { transform: translate(15px, -15px) rotate(15deg); } }
+        @keyframes float2 { from { transform: translate(0,0) rotate(0deg); } to { transform: translate(-20px, 10px) rotate(-10deg); } }
+
+        .card-v3-scene:hover .main-icon {
+            transform: translate(-50%, -60%) scale(1.15);
+            color: var(--us-red);
+        }
+
+        .card-v3-scene:hover .sub-icon {
+            opacity: 0.8;
+            transform: scale(1.3);
+        }
+
+        /* Background Text/Icon Hybrid */
+        .bg-text {
+            position: absolute;
+            top: -10%;
+            right: -10%;
+            font-size: 15rem;
+            font-weight: 900;
+            opacity: 0.03;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .content-v3 {
+            position: relative;
+            z-index: 10;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8));
+            margin: -3rem;
+            padding: 3rem;
+            border-radius: 0 0 40px 40px;
+        }
+
+        .content-v3 h3 { font-size: 1.8rem; margin: 0; }
+        .content-v3 p { font-size: 1.1rem; opacity: 0.6; margin: 1rem 0 0; }
+
+    </style>
+</head>
+<body>
+
+    <div class="glass-v3">
+        <!-- Teletrabajo -->
+        <a href="#" class="card-v3-scene">
+            <div class="bg-text">TL</div>
+            <div class="scene-container">
+                <i class="fa-solid fa-house-laptop main-icon"></i>
+                <i class="fa-solid fa-cloud sub-icon sub-1"></i>
+                <i class="fa-solid fa-wifi sub-icon sub-2"></i>
+            </div>
+            <div class="content-v3">
+                <h3>Teletrabajo</h3>
+                <p>Tu oficina digital híbrida.</p>
+            </div>
+        </a>
+
+        <!-- Formación -->
+        <a href="#" class="card-v3-scene">
+            <div class="bg-text">FM</div>
+            <div class="scene-container">
+                <i class="fa-solid fa-graduation-cap main-icon"></i>
+                <i class="fa-solid fa-lightbulb sub-icon sub-1"></i>
+                <i class="fa-solid fa-code sub-icon sub-2"></i>
+            </div>
+            <div class="content-v3">
+                <h3>Formación</h3>
+                <p>Cursos y capacitación continua.</p>
+            </div>
+        </a>
+
+        <!-- Acción Social -->
+        <a href="#" class="card-v3-scene">
+            <div class="bg-text">AS</div>
+            <div class="scene-container">
+                <i class="fa-solid fa-hand-holding-heart main-icon"></i>
+                <i class="fa-solid fa-heart sub-icon sub-1" style="color: var(--us-red)"></i>
+                <i class="fa-solid fa-users sub-icon sub-2"></i>
+            </div>
+            <div class="content-v3">
+                <h3>Acción Social</h3>
+                <p>Bienestar y ayudas para el personal.</p>
+            </div>
+        </a>
+    </div>
+
+</body>
+</html>

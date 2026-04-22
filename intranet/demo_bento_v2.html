@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bento V2 - Iconic Intranet US</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --us-red: #a40133;
+            --us-red-soft: #fff1f3;
+            --us-gold: #f9b905;
+            --us-gold-soft: #fffbeb;
+            --us-teal: #009e93;
+            --us-teal-soft: #f0fdfa;
+            --us-charcoal: #1e293b;
+            --bg-canvas: #f8fafc;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-canvas);
+            color: var(--us-charcoal);
+            margin: 0;
+            padding: 5rem 10%;
+            background-image: 
+                radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--us-red);
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1.2rem;
+        }
+
+        .bento-v2 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 220px;
+            gap: 1.5rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .card-v2 {
+            background: white;
+            border-radius: 32px;
+            padding: 2rem;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .card-v2:hover {
+            transform: scale(1.02) translateY(-10px);
+            box-shadow: 0 30px 60px rgba(164, 1, 51, 0.08);
+        }
+
+        .card-v2.featured {
+            grid-column: span 2;
+            grid-row: span 2;
+            background: white;
+        }
+
+        .card-v2.wide {
+            grid-column: span 2;
+        }
+
+        /* Icon with subtle background - Isometric feel */
+        .icon-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .icon-wrapper {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            font-size: 2rem;
+            position: relative;
+            background: white;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .card-v2:hover .icon-wrapper {
+            transform: rotate(-10deg) scale(1.1);
+        }
+
+        /* Subtle "blob" backgrounds */
+        .blob {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.5;
+            transition: all 0.5s;
+        }
+
+        .red .blob { background: var(--us-red); }
+        .gold .blob { background: var(--us-gold); }
+        .teal .blob { background: var(--us-teal); }
+
+        .card-v2:hover .blob {
+            transform: scale(2.5);
+            opacity: 0.3;
+        }
+
+        .card-info {
+            z-index: 2;
+        }
+
+        .card-info h3 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .featured h3 { font-size: 2.2rem; }
+
+        .card-info p {
+            margin: 0.8rem 0 0;
+            font-size: 0.95rem;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        /* Background texture inside card on hover */
+        .card-v2::after {
+            content: "US";
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            font-size: 8rem;
+            font-weight: 900;
+            opacity: 0.02;
+            transition: all 0.5s;
+        }
+
+        .card-v2:hover::after {
+            transform: scale(1.2);
+            opacity: 0.05;
+        }
+
+        @media (max-width: 1024px) {
+            .bento-v2 { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Intranet US - Bento V2</h1>
+        <p>Diseño con iconografía isométrica y fondos orgánicos</p>
+    </div>
+
+    <div class="bento-v2">
+        <!-- Teletrabajo -->
+        <a href="#" class="card-v2 featured red">
+            <div class="icon-container">
+                <div class="icon-wrapper">
+                    <i class="fa-solid fa-house-laptop"></i>
+                    <div class="blob"></div>
+                </div>
+            </div>
+            <div class="card-info">
+                <h3>Teletrabajo</h3>
+                <p>Gestiona tu jornada laboral híbrida con herramientas de última generación y seguimiento en tiempo real.</p>
+            </div>
+        </a>
+
+        <!-- Formación -->
+        <a href="#" class="card-v2 wide teal">
+            <div class="icon-container">
+                <div class="icon-wrapper" style="color: var(--us-teal)">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <div class="blob"></div>
+                </div>
+            </div>
+            <div class="card-info">
+                <h3>Formación Continua</h3>
+                <p>Cursos de capacitación especializados para el PTGAS.</p>
+            </div>
+        </a>
+
+        <!-- Buscador -->
+        <a href="#" class="card-v2 gold">
+            <div class="icon-container">
+                <div class="icon-wrapper" style="color: var(--us-gold)">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <div class="blob"></div>
+                </div>
+            </div>
+            <div class="card-info">
+                <h3>Buscador</h3>
+            </div>
+        </a>
+
+        <!-- Directorio -->
+        <a href="#" class="card-v2">
+            <div class="icon-container">
+                <div class="icon-wrapper">
+                    <i class="fa-solid fa-users"></i>
+                    <div class="blob" style="background: #e2e8f0"></div>
+                </div>
+            </div>
+            <div class="card-info">
+                <h3>Directorio</h3>
+            </div>
+        </a>
+
+        <!-- Acción Social -->
+        <a href="#" class="card-v2 red">
+            <div class="icon-container">
+                <div class="icon-wrapper">
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+                    <div class="blob"></div>
+                </div>
+            </div>
+            <div class="card-info">
+                <h3>Acción Social</h3>
+            </div>
+        </a>
+
+        <!-- Empleo -->
+        <a href="#" class="card-v2 wide teal">
+            <div class="icon-container">
+                <div class="icon-wrapper" style="color: var(--us-teal)">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <div class="blob"></div>
+                </div>
+            </div>
+            <div class="card-info">
+                <h3>Ofertas Empleo</h3>
+                <p>Procesos de selección y noticias de estabilización laboral.</p>
+            </div>
+        </a>
+    </div>
+
+</body>
+</html>

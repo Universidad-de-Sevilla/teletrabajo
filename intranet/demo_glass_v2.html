@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glass V2 - Frosty Intranet US</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --us-red: #a40133;
+            --us-red-vibrant: #e6194b;
+            --us-gold: #f9b905;
+            --white: rgba(255, 255, 255, 0.8);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            padding: 5rem 5%;
+            min-height: 100vh;
+            background: #0f172a;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Blobs Background */
+        .bg-blob {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, var(--us-red) 0%, #7d0127 100%);
+            filter: blur(100px);
+            border-radius: 50%;
+            opacity: 0.15;
+            z-index: -1;
+            animation: float 20s infinite alternate;
+        }
+
+        .bg-blob-2 {
+            top: 20%;
+            left: 60%;
+            background: var(--us-gold);
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, 100px) scale(1.2); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            letter-spacing: -1px;
+        }
+
+        .glass-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .glass-card-v2 {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card-v2:hover {
+            transform: translateY(-20px);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+        }
+
+        /* The "Puddle" behind the icon */
+        .icon-puddle {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(164, 1, 51, 0.6) 0%, transparent 70%);
+            border-radius: 50%;
+            position: absolute;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%) scale(0.8);
+            z-index: 1;
+            transition: all 0.6s;
+            filter: blur(10px);
+        }
+
+        .featured-gold .icon-puddle { background: radial-gradient(circle, rgba(249, 185, 5, 0.4) 0%, transparent 70%); }
+
+        .glass-card-v2:hover .icon-puddle {
+            transform: translateX(-50%) scale(2);
+            opacity: 1;
+        }
+
+        .glass-icon-v2 {
+            font-size: 3.5rem;
+            position: relative;
+            z-index: 2;
+            color: white;
+            margin-bottom: 2rem;
+            display: inline-block;
+            transition: all 0.5s;
+            /* Isomorphic shadow feel */
+            text-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+        }
+
+        .glass-card-v2:hover .glass-icon-v2 {
+            transform: translateY(-10px) rotateY(15deg);
+        }
+
+        .glass-card-v2 h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .glass-card-v2 p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.6);
+            transition: color 0.3s;
+        }
+
+        .glass-card-v2:hover p {
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Glowing Border on hover */
+        .glass-card-v2::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 30px;
+            padding: 1px;
+            background: linear-gradient(135deg, white, transparent, white);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.1;
+            transition: opacity 0.3s;
+        }
+
+        .glass-card-v2:hover::after {
+            opacity: 0.6;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="bg-blob"></div>
+    <div class="bg-blob bg-blob-2"></div>
+
+    <div class="header">
+        <h1>Intranet US - Glassmorphism V2</h1>
+        <p>Iconografía inmersiva, efectos de transparencia y puddles reactivos</p>
+    </div>
+
+    <div class="glass-grid">
+        <a href="#" class="glass-card-v2">
+            <div class="icon-puddle"></div>
+            <i class="fa-solid fa-house-user glass-icon-v2"></i>
+            <h3>Teletrabajo</h3>
+            <p>Conéctate a tu puesto desde cualquier lugar con seguridad.</p>
+        </a>
+
+        <a href="#" class="glass-card-v2 featured-gold">
+            <div class="icon-puddle"></div>
+            <i class="fa-solid fa-graduation-cap glass-icon-v2"></i>
+            <h3>Formación</h3>
+            <p>Descubre el catálogo de cursos para tu crecimiento.</p>
+        </a>
+
+        <a href="#" class="glass-card-v2">
+            <div class="icon-puddle"></div>
+            <i class="fa-solid fa-hand-holding-heart glass-icon-v2"></i>
+            <h3>Acción Social</h3>
+            <p>Ayudas y beneficios sociales para el personal.</p>
+        </a>
+
+        <a href="#" class="glass-card-v2 featured-gold">
+            <div class="icon-puddle"></div>
+            <i class="fa-solid fa-magnifying-glass glass-icon-v2"></i>
+            <h3>Buscador AI</h3>
+            <p>Navega a través de toda la documentación corporativa.</p>
+        </a>
+    </div>
+
+</body>
+</html>
