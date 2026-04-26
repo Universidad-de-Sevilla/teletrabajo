@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Puestos y Retribuciones - Intranet PTGAS</title>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<style>
+		/* ---- Page-specific styles ---- */
+
+		/* Tabs Navigation */
+		.tabs-nav {
+			display: flex;
+			gap: 0;
+			background: var(--white);
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+			margin-bottom: 2rem;
+		}
+		.tab-btn {
+			flex: 1;
+			padding: 1.1rem 1rem;
+			background: transparent;
+			border: none;
+			border-bottom: 3px solid transparent;
+			cursor: pointer;
+			font-family: 'Inter', sans-serif;
+			font-size: 0.95rem;
+			font-weight: 600;
+			color: #666;
+			transition: all 0.25s;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 0.6rem;
+		}
+		.tab-btn:hover {
+			background: rgba(164, 1, 51, 0.04);
+			color: var(--us-red);
+		}
+		.tab-btn.active {
+			color: var(--us-red);
+			border-bottom-color: var(--us-red);
+			background: rgba(164, 1, 51, 0.04);
+		}
+		.tab-btn i {
+			font-size: 1.1rem;
+		}
+
+		/* Tab Panels */
+		.tab-panel {
+			display: none;
+		}
+		.tab-panel.active {
+			display: block;
+			animation: fadeInUp 0.35s ease-out;
+		}
+
+		/* RPT Table */
+		.rpt-card {
+			background: var(--white);
+			border-radius: 12px;
+			box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+			overflow: hidden;
+			margin-bottom: 1.5rem;
+		}
+		.rpt-card-header {
+			padding: 1.5rem 2rem;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			border-bottom: 1px solid #f0f0f0;
+			flex-wrap: wrap;
+			gap: 1rem;
+		}
+		.rpt-card-header h3 {
+			font-size: 1.15rem;
+			color: var(--us-charcoal);
+			display: flex;
+			align-items: center;
+			gap: 0.6rem;
+		}
+		.rpt-card-header h3 i {
+			color: var(--us-red);
+		}
+		.rpt-search {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			border: 1px solid #ddd;
+			border-radius: 8px;
+			padding: 0.5rem 1rem;
+			background: #fafafa;
+		}
+		.rpt-search input {
+			border: none;
+			background: transparent;
+			outline: none;
+			font-size: 0.9rem;
+			width: 200px;
+			font-family: 'Inter', sans-serif;
+			color: var(--us-charcoal);
+		}
+		.rpt-search i {
+			color: #aaa;
+		}
+		.rpt-table {
+			width: 100%;
+			border-collapse: collapse;
+			font-size: 0.9rem;
+		}
+		.rpt-table thead tr {
+			background: #f8f9fa;
+		}
+		.rpt-table th {
+			padding: 0.9rem 1.5rem;
+			text-align: left;
+			font-weight: 600;
+			color: #555;
+			font-size: 0.8rem;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			border-bottom: 2px solid #eee;
+			white-space: nowrap;
+		}
+		.rpt-table td {
+			padding: 1rem 1.5rem;
+			border-bottom: 1px solid #f2f2f2;
+			color: var(--us-charcoal);
+			vertical-align: middle;
+		}
+		.rpt-table tr:last-child td {
+			border-bottom: none;
+		}
+		.rpt-table tbody tr {
+			transition: background 0.2s;
+		}
+		.rpt-table tbody tr:hover {
+			background: #fdf8f9;
+		}
+		.grupo-badge {
+			display: inline-block;
+			padding: 0.25rem 0.7rem;
+			border-radius: 20px;
+			font-size: 0.8rem;
+			font-weight: 700;
+		}
+		.grupo-a1 { background: rgba(164, 1, 51, 0.1); color: var(--us-red); }
+		.grupo-a2 { background: rgba(249, 185, 5, 0.15); color: #9c7100; }
+		.grupo-b  { background: rgba(0, 158, 147, 0.12); color: #00665e; }
+		.grupo-c1 { background: rgba(147, 189, 34, 0.15); color: #4a6311; }
+		.grupo-c2 { background: rgba(60, 60, 59, 0.1); color: #555; }
+
+		.nivel-badge {
+			font-weight: 700;
+			color: var(--us-charcoal);
+		}
+		.estado-dot {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.4rem;
+			font-size: 0.85rem;
+		}
+		.estado-dot::before {
+			content: '';
+			display: inline-block;
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+		}
+		.estado-dot.ocupado::before { background: var(--us-teal); }
+		.estado-dot.vacante::before { background: var(--us-gold); }
+		.estado-dot.reserva::before { background: #aaa; }
+
+		.btn-detalle {
+			padding: 0.4rem 1rem;
+			border: 1px solid var(--us-red);
+			color: var(--us-red);
+			background: transparent;
+			border-radius: 6px;
+			font-size: 0.8rem;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all 0.2s;
+			text-decoration: none;
+			display: inline-block;
+		}
+		.btn-detalle:hover {
+			background: var(--us-red);
+			color: var(--white);
+		}
+
+		/* Summary Stats for RPT */
+		.rpt-stats {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+			gap: 1.2rem;
+			margin-bottom: 2rem;
+		}
+		.rpt-stat {
+			background: var(--white);
+			border-radius: 12px;
+			padding: 1.4rem 1.8rem;
+			box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+			display: flex;
+			align-items: center;
+			gap: 1.2rem;
+		}
+		.rpt-stat-icon {
+			width: 50px;
+			height: 50px;
+			border-radius: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.4rem;
+			flex-shrink: 0;
+		}
+		.rpt-stat-icon.red { background: rgba(164, 1, 51, 0.08); color: var(--us-red); }
+		.rpt-stat-icon.gold { background: rgba(249, 185, 5, 0.12); color: var(--us-gold-light); }
+		.rpt-stat-icon.teal { background: rgba(0, 158, 147, 0.1); color: var(--us-teal); }
+		.rpt-stat-icon.green { background: rgba(147, 189, 34, 0.12); color: #5a7a15; }
+		.rpt-stat-label {
+			font-size: 0.85rem;
+			color: #777;
+			margin-bottom: 0.3rem;
+		}
+		.rpt-stat-value {
+			font-size: 1.8rem;
+			font-weight: 700;
+			color: var(--us-charcoal);
+			line-height: 1;
+		}
+
+		/* Perfiles Styles */
+		.perfiles-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+			gap: 1.5rem;
+		}
+		.perfil-card {
+			background: var(--white);
+			border-radius: 12px;
+			box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+			padding: 1.8rem;
+			transition: transform 0.25s, box-shadow 0.25s;
+			border-left: 4px solid transparent;
+		}
+		.perfil-card:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 10px 30px rgba(164, 1, 51, 0.1);
+			border-left-color: var(--us-red);
+		}
+		.perfil-card-top {
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-start;
+			margin-bottom: 1rem;
+		}
+		.perfil-grupo {
+			padding: 0.3rem 0.8rem;
+			border-radius: 20px;
+			font-size: 0.78rem;
+			font-weight: 700;
+		}
+		.perfil-card h3 {
+			font-size: 1.05rem;
+			color: var(--us-charcoal);
+			margin-bottom: 0.6rem;
+			line-height: 1.35;
+		}
+		.perfil-card p {
+			font-size: 0.88rem;
+			color: #777;
+			line-height: 1.5;
+			margin-bottom: 1.2rem;
+		}
+		.perfil-tags {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			margin-bottom: 1.2rem;
+		}
+		.perfil-tag {
+			background: #f3f4f6;
+			color: #555;
+			font-size: 0.75rem;
+			padding: 0.25rem 0.7rem;
+			border-radius: 20px;
+			font-weight: 500;
+		}
+		.perfil-footer {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			border-top: 1px solid #f0f0f0;
+			padding-top: 1rem;
+		}
+		.perfil-nivel {
+			font-size: 0.85rem;
+			color: #666;
+		}
+		.perfil-nivel strong {
+			color: var(--us-charcoal);
+		}
+
+		/* Retribuciones Styles */
+		.retrib-container {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 1.5rem;
+		}
+		@media (max-width: 900px) {
+			.retrib-container { grid-template-columns: 1fr; }
+		}
+		.retrib-card {
+			background: var(--white);
+			border-radius: 12px;
+			box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+			overflow: hidden;
+		}
+		.retrib-card-header {
+			background: var(--us-red);
+			color: var(--white);
+			padding: 1.2rem 1.8rem;
+			display: flex;
+			align-items: center;
+			gap: 0.8rem;
+		}
+		.retrib-card-header h3 {
+			font-size: 1rem;
+			font-weight: 600;
+		}
+		.retrib-card-header i {
+			font-size: 1.1rem;
+			opacity: 0.85;
+		}
+		.retrib-table {
+			width: 100%;
+			border-collapse: collapse;
+			font-size: 0.9rem;
+		}
+		.retrib-table th {
+			background: #f8f9fa;
+			padding: 0.75rem 1.2rem;
+			text-align: left;
+			font-size: 0.78rem;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			color: #666;
+			font-weight: 600;
+			border-bottom: 1px solid #eee;
+		}
+		.retrib-table td {
+			padding: 0.9rem 1.2rem;
+			border-bottom: 1px solid #f5f5f5;
+			color: var(--us-charcoal);
+		}
+		.retrib-table tr:last-child td { border-bottom: none; }
+		.retrib-table tbody tr:hover { background: #fdf8f9; }
+		.retrib-table td:last-child {
+			font-weight: 700;
+			text-align: right;
+			color: var(--us-red);
+		}
+		.retrib-note {
+			background: rgba(249, 185, 5, 0.1);
+			border-left: 3px solid var(--us-gold);
+			border-radius: 0 8px 8px 0;
+			padding: 1rem 1.5rem;
+			margin: 1.5rem 0 0;
+			font-size: 0.88rem;
+			color: #6b5100;
+			display: flex;
+			gap: 0.7rem;
+			align-items: flex-start;
+		}
+		.retrib-note i {
+			color: var(--us-gold-light);
+			margin-top: 2px;
+			flex-shrink: 0;
+		}
+		.retrib-card-wide {
+			grid-column: 1 / -1;
+		}
+		.retrib-year-selector {
+			display: flex;
+			gap: 0.5rem;
+			align-items: center;
+			flex-wrap: wrap;
+		}
+		.year-btn {
+			padding: 0.35rem 1rem;
+			border: 1px solid #ddd;
+			border-radius: 20px;
+			background: transparent;
+			cursor: pointer;
+			font-size: 0.85rem;
+			font-family: 'Inter', sans-serif;
+			color: #555;
+			transition: all 0.2s;
+		}
+		.year-btn:hover { border-color: var(--us-red); color: var(--us-red); }
+		.year-btn.active {
+			background: var(--us-red);
+			border-color: var(--us-red);
+			color: var(--white);
+			font-weight: 600;
+		}
+
+		/* Nómina Styles */
+		.nomina-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 1.5rem;
+		}
+		@media (max-width: 900px) {
+			.nomina-grid { grid-template-columns: 1fr; }
+			.tabs-nav { flex-direction: column; }
+		}
+		.nomina-access-card {
+			background: var(--white);
+			border-radius: 12px;
+			box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+			padding: 2rem;
+			text-align: center;
+			transition: transform 0.25s, box-shadow 0.25s;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 1rem;
+			cursor: pointer;
+			text-decoration: none;
+			color: inherit;
+		}
+		.nomina-access-card:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 12px 35px rgba(164, 1, 51, 0.12);
+		}
+		.nomina-access-icon {
+			width: 72px;
+			height: 72px;
+			border-radius: 16px;
+			background: rgba(164, 1, 51, 0.08);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 2rem;
+			color: var(--us-red);
+		}
+		.nomina-access-card h3 {
+			font-size: 1.1rem;
+			color: var(--us-charcoal);
+		}
+		.nomina-access-card p {
+			font-size: 0.88rem;
+			color: #777;
+			line-height: 1.5;
+		}
+		.nomina-access-card .btn-solid {
+			margin-top: 0.5rem;
+		}
+		.nomina-history-card {
+			background: var(--white);
+			border-radius: 12px;
+			box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+			overflow: hidden;
+			grid-column: 1 / -1;
+		}
+		.nomina-history-header {
+			padding: 1.5rem 2rem;
+			border-bottom: 1px solid #f0f0f0;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 1rem;
+		}
+		.nomina-history-header h3 {
+			display: flex;
+			align-items: center;
+			gap: 0.6rem;
+			color: var(--us-charcoal);
+		}
+		.nomina-history-header h3 i { color: var(--us-red); }
+		.nomina-row {
+			display: flex;
+			align-items: center;
+			padding: 1rem 2rem;
+			border-bottom: 1px solid #f5f5f5;
+			gap: 1.5rem;
+			transition: background 0.2s;
+			flex-wrap: wrap;
+		}
+		.nomina-row:last-child { border-bottom: none; }
+		.nomina-row:hover { background: #fdf8f9; }
+		.nomina-mes {
+			font-weight: 600;
+			color: var(--us-charcoal);
+			min-width: 120px;
+		}
+		.nomina-tipo {
+			flex: 1;
+			font-size: 0.9rem;
+			color: #666;
+		}
+		.nomina-importe {
+			font-weight: 700;
+			color: var(--us-charcoal);
+			min-width: 110px;
+			text-align: right;
+		}
+		.nomina-actions {
+			display: flex;
+			gap: 0.5rem;
+		}
+		.btn-icon {
+			width: 34px;
+			height: 34px;
+			border-radius: 8px;
+			border: 1px solid #ddd;
+			background: transparent;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			color: #666;
+			font-size: 0.85rem;
+			transition: all 0.2s;
+		}
+		.btn-icon:hover {
+			background: var(--us-red);
+			color: var(--white);
+			border-color: var(--us-red);
+		}
+
+		/* Shared */
+		.section-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 1.5rem;
+			flex-wrap: wrap;
+			gap: 1rem;
+		}
+		.section-header h2 {
+			font-size: 1.3rem;
+			color: var(--us-charcoal);
+			display: flex;
+			align-items: center;
+			gap: 0.6rem;
+		}
+		.section-header h2 i { color: var(--us-red); }
+		.btn-solid {
+			display: inline-block;
+			padding: 0.7rem 1.5rem;
+			background: var(--us-red);
+			color: var(--white);
+			border-radius: 8px;
+			font-weight: 600;
+			font-size: 0.9rem;
+			cursor: pointer;
+			border: none;
+			text-decoration: none;
+			transition: all 0.2s;
+			font-family: 'Inter', sans-serif;
+		}
+		.btn-solid:hover {
+			background: var(--us-red-light);
+			transform: translateY(-1px);
+			box-shadow: 0 4px 12px rgba(164, 1, 51, 0.3);
+		}
+		.btn-outline {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.4rem;
+			padding: 0.7rem 1.5rem;
+			background: transparent;
+			color: var(--us-red);
+			border: 1px solid var(--us-red);
+			border-radius: 8px;
+			font-weight: 600;
+			font-size: 0.9rem;
+			cursor: pointer;
+			text-decoration: none;
+			transition: all 0.2s;
+			font-family: 'Inter', sans-serif;
+		}
+		.btn-outline:hover {
+			background: var(--us-red);
+			color: var(--white);
+		}
+	</style>
+</head>
+
+<body class="intranet-page" style="background-color: #f3f4f6;">
+
+	<nav>
+		<div class="logo">
+			<img src="../assets/img/logo_us_neg.png" alt="Logo Universidad de Sevilla">
+			Intranet <span>PTGAS</span>
+		</div>
+		<button class="mobile-menu-toggle" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="main-nav">
+			<span class="hamburger-line"></span>
+			<span class="hamburger-line"></span>
+			<span class="hamburger-line"></span>
+		</button>
+		<div class="nav-links" id="main-nav">
+			<a href="index.html">Inicio</a>
+			<a href="convocatorias.html">Convocatorias</a>
+			<a href="puestos_retribuciones.html" style="background: rgba(255,255,255,0.15); border-radius: 6px; padding: 0.5rem 1rem;">Retribuciones</a>
+			<a href="#">Formación</a>
+			<a href="#">Acción Social</a>
+			<a href="#">Directorio</a>
+			<a href="#"><i class="fa-regular fa-user" style="margin-right:0.5rem;"></i>Usuario <i class="fa-solid fa-chevron-down" style="margin-left:0.3rem; font-size: 0.8rem;"></i></a>
+		</div>
+	</nav>
+
+	<!-- Banner superior / Page Header -->
+	<div class="page-header">
+		<h1><i class="fa-solid fa-briefcase" style="margin-right: 0.6rem; opacity: 0.85;"></i>Puestos y Retribuciones</h1>
+		<p>Consulta la relación de puestos de trabajo, perfiles, retribuciones anuales y tu nómina</p>
+	</div>
+
+	<div class="dashboard-container">
+
+		<!-- Tabs de navegación entre secciones -->
+		<div class="tabs-nav" role="tablist" aria-label="Secciones de Puestos y Retribuciones">
+			<button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-rpt" data-tab="rpt">
+				<i class="fa-solid fa-table-list"></i> Relación de Puestos de Trabajo
+			</button>
+			<button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-perfiles" data-tab="perfiles">
+				<i class="fa-solid fa-id-card"></i> Perfiles de Puestos
+			</button>
+			<button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-retribuciones" data-tab="retribuciones">
+				<i class="fa-solid fa-euro-sign"></i> Retribuciones Anuales
+			</button>
+			<button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-nomina" data-tab="nomina">
+				<i class="fa-solid fa-file-invoice-dollar"></i> Consulta Nómina
+			</button>
+		</div>
+
+		<!-- ======================= TAB 1: RPT ======================= -->
+		<div id="panel-rpt" class="tab-panel active" role="tabpanel">
+
+			<div class="section-header">
+				<h2><i class="fa-solid fa-table-list"></i> Relación de Puestos de Trabajo</h2>
+				<div style="display:flex; gap:0.7rem; flex-wrap:wrap;">
+					<a href="#" class="btn-outline"><i class="fa-solid fa-download"></i> Descargar RPT</a>
+					<a href="#" class="btn-solid"><i class="fa-solid fa-filter" style="margin-right:0.4rem;"></i> Filtrar</a>
+				</div>
+			</div>
+
+			<!-- Stats rápidas RPT -->
+			<div class="rpt-stats">
+				<div class="rpt-stat">
+					<div class="rpt-stat-icon red"><i class="fa-solid fa-list-check"></i></div>
+					<div>
+						<div class="rpt-stat-label">Total puestos</div>
+						<div class="rpt-stat-value">1.247</div>
+					</div>
+				</div>
+				<div class="rpt-stat">
+					<div class="rpt-stat-icon teal"><i class="fa-solid fa-user-check"></i></div>
+					<div>
+						<div class="rpt-stat-label">Puestos ocupados</div>
+						<div class="rpt-stat-value">1.089</div>
+					</div>
+				</div>
+				<div class="rpt-stat">
+					<div class="rpt-stat-icon gold"><i class="fa-solid fa-circle-dot"></i></div>
+					<div>
+						<div class="rpt-stat-label">Vacantes</div>
+						<div class="rpt-stat-value">158</div>
+					</div>
+				</div>
+				<div class="rpt-stat">
+					<div class="rpt-stat-icon green"><i class="fa-solid fa-layer-group"></i></div>
+					<div>
+						<div class="rpt-stat-label">Grupos / Subgrupos</div>
+						<div class="rpt-stat-value">5</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Tabla RPT -->
+			<div class="rpt-card">
+				<div class="rpt-card-header">
+					<h3><i class="fa-solid fa-table"></i> Listado de puestos</h3>
+					<div class="rpt-search">
+						<i class="fa-solid fa-search"></i>
+						<input type="text" id="rpt-search-input" placeholder="Buscar puesto, código, unidad…" aria-label="Buscar en la RPT">
+					</div>
+				</div>
+				<div style="overflow-x: auto;">
+					<table class="rpt-table" id="rpt-table">
+						<thead>
+							<tr>
+								<th>Código</th>
+								<th>Denominación del puesto</th>
+								<th>Unidad</th>
+								<th>Grupo</th>
+								<th>Nivel</th>
+								<th>Estado</th>
+								<th>Acción</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><strong>PAS-0042</strong></td>
+								<td>Técnico/a Superior de Gestión</td>
+								<td>Recursos Humanos</td>
+								<td><span class="grupo-badge grupo-a1">A1</span></td>
+								<td><span class="nivel-badge">26</span></td>
+								<td><span class="estado-dot ocupado">Ocupado</span></td>
+								<td><a href="#" class="btn-detalle">Ver ficha</a></td>
+							</tr>
+							<tr>
+								<td><strong>PAS-0087</strong></td>
+								<td>Jefe/a de Negociado</td>
+								<td>Secretaría General</td>
+								<td><span class="grupo-badge grupo-a2">A2</span></td>
+								<td><span class="nivel-badge">22</span></td>
+								<td><span class="estado-dot ocupado">Ocupado</span></td>
+								<td><a href="#" class="btn-detalle">Ver ficha</a></td>
+							</tr>
+							<tr>
+								<td><strong>PAS-0113</strong></td>
+								<td>Técnico/a Especialista de Laboratorio</td>
+								<td>Facultad de Química</td>
+								<td><span class="grupo-badge grupo-b">B</span></td>
+								<td><span class="nivel-badge">20</span></td>
+								<td><span class="estado-dot vacante">Vacante</span></td>
+								<td><a href="#" class="btn-detalle">Ver ficha</a></td>
+							</tr>
+							<tr>
+								<td><strong>PAS-0156</strong></td>
+								<td>Administrativo/a</td>
+								<td>Gestión Económica</td>
+								<td><span class="grupo-badge grupo-c1">C1</span></td>
+								<td><span class="nivel-badge">18</span></td>
+								<td><span class="estado-dot ocupado">Ocupado</span></td>
+								<td><a href="#" class="btn-detalle">Ver ficha</a></td>
+							</tr>
+							<tr>
+								<td><strong>PAS-0201</strong></td>
+								<td>Auxiliar de Servicios</td>
+								<td>Campus Reina Mercedes</td>
+								<td><span class="grupo-badge grupo-c2">C2</span></td>
+								<td><span class="nivel-badge">14</span></td>
+								<td><span class="estado-dot ocupado">Ocupado</span></td>
+								<td><a href="#" class="btn-detalle">Ver ficha</a></td>
+							</tr>
+							<tr>
+								<td><strong>PAS-0238</strong></td>
+								<td>Técnico/a de Comunicación</td>
+								<td>Comunicación y Relaciones Inst.</td>
+								<td><span class="grupo-badge grupo-a2">A2</span></td>
+								<td><span class="nivel-badge">22</span></td>
+								<td><span class="estado-dot vacante">Vacante</span></td>
+								<td><a href="#" class="btn-detalle">Ver ficha</a></td>
+							</tr>
+							<tr>
+								<td><strong>PAS-0310</strong></td>
+								<td>Técnico/a de Archivo y Biblioteca</td>
+								<td>Biblioteca Universitaria</td>
+								<td><span class="grupo-badge grupo-a1">A1</span></td>
+								<td><span class="nivel-badge">24</span></td>
+								<td><span class="estado-dot ocupado">Ocupado</span></td>
+								<td><a href="#" class="btn-detalle">Ver ficha</a></td>
+							</tr>
+							<tr>
+								<td><strong>PAS-0402</strong></td>
+								<td>Gestor/a de Apoyo a la Docencia</td>
+								<td>Escuela Politécnica Superior</td>
+								<td><span class="grupo-badge grupo-c1">C1</span></td>
+								<td><span class="nivel-badge">16</span></td>
+								<td><span class="estado-dot reserva">Reserva</span></td>
+								<td><a href="#" class="btn-detalle">Ver ficha</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<!-- ======================= TAB 2: PERFILES ======================= -->
+		<div id="panel-perfiles" class="tab-panel" role="tabpanel">
+
+			<div class="section-header">
+				<h2><i class="fa-solid fa-id-card"></i> Perfiles de Puestos</h2>
+				<a href="#" class="btn-outline"><i class="fa-solid fa-download"></i> Descargar catálogo</a>
+			</div>
+
+			<div class="perfiles-grid">
+				<div class="perfil-card">
+					<div class="perfil-card-top">
+						<span class="perfil-grupo grupo-badge grupo-a1">Grupo A1</span>
+						<span style="font-size:0.8rem; color:#aaa;">Nivel 26</span>
+					</div>
+					<h3>Técnico/a Superior de Gestión y Administración</h3>
+					<p>Realiza tareas de gestión, estudio y propuesta de carácter técnico y administrativo de alto nivel de complejidad.</p>
+					<div class="perfil-tags">
+						<span class="perfil-tag">Titulación universitaria</span>
+						<span class="perfil-tag">Gestión pública</span>
+						<span class="perfil-tag">Derecho administrativo</span>
+					</div>
+					<div class="perfil-footer">
+						<span class="perfil-nivel">Complemento destino: <strong>Nivel 26</strong></span>
+						<a href="#" class="btn-detalle">Ver perfil completo</a>
+					</div>
+				</div>
+
+				<div class="perfil-card">
+					<div class="perfil-card-top">
+						<span class="perfil-grupo grupo-badge grupo-a2">Grupo A2</span>
+						<span style="font-size:0.8rem; color:#aaa;">Nivel 22</span>
+					</div>
+					<h3>Jefe/a de Negociado</h3>
+					<p>Dirige y coordina las tareas administrativas de la unidad a su cargo, supervisando la correcta tramitación de expedientes.</p>
+					<div class="perfil-tags">
+						<span class="perfil-tag">Diplomatura / Grado</span>
+						<span class="perfil-tag">Gestión de equipos</span>
+						<span class="perfil-tag">Procedimiento administrativo</span>
+					</div>
+					<div class="perfil-footer">
+						<span class="perfil-nivel">Complemento destino: <strong>Nivel 22</strong></span>
+						<a href="#" class="btn-detalle">Ver perfil completo</a>
+					</div>
+				</div>
+
+				<div class="perfil-card">
+					<div class="perfil-card-top">
+						<span class="perfil-grupo grupo-badge grupo-b">Grupo B</span>
+						<span style="font-size:0.8rem; color:#aaa;">Nivel 20</span>
+					</div>
+					<h3>Técnico/a Especialista</h3>
+					<p>Ejecuta actividades técnicas específicas que requieren formación especializada en un área concreta de conocimiento o laboratorio.</p>
+					<div class="perfil-tags">
+						<span class="perfil-tag">FP Superior / Técnico</span>
+						<span class="perfil-tag">Especialidad técnica</span>
+						<span class="perfil-tag">Laboratorio / Informática</span>
+					</div>
+					<div class="perfil-footer">
+						<span class="perfil-nivel">Complemento destino: <strong>Nivel 20</strong></span>
+						<a href="#" class="btn-detalle">Ver perfil completo</a>
+					</div>
+				</div>
+
+				<div class="perfil-card">
+					<div class="perfil-card-top">
+						<span class="perfil-grupo grupo-badge grupo-c1">Grupo C1</span>
+						<span style="font-size:0.8rem; color:#aaa;">Nivel 18</span>
+					</div>
+					<h3>Administrativo/a</h3>
+					<p>Realiza tareas de apoyo administrativo: tramitación de documentos, atención al usuario, gestión de registros y archivo.</p>
+					<div class="perfil-tags">
+						<span class="perfil-tag">Bachillerato / FP Medio</span>
+						<span class="perfil-tag">Ofimática</span>
+						<span class="perfil-tag">Atención al ciudadano</span>
+					</div>
+					<div class="perfil-footer">
+						<span class="perfil-nivel">Complemento destino: <strong>Nivel 18</strong></span>
+						<a href="#" class="btn-detalle">Ver perfil completo</a>
+					</div>
+				</div>
+
+				<div class="perfil-card">
+					<div class="perfil-card-top">
+						<span class="perfil-grupo grupo-badge grupo-c2">Grupo C2</span>
+						<span style="font-size:0.8rem; color:#aaa;">Nivel 14</span>
+					</div>
+					<h3>Auxiliar de Servicios</h3>
+					<p>Presta servicios de apoyo, información, control de accesos y tareas auxiliares de carácter general en centros y dependencias.</p>
+					<div class="perfil-tags">
+						<span class="perfil-tag">Graduado Escolar / ESO</span>
+						<span class="perfil-tag">Atención al público</span>
+						<span class="perfil-tag">Servicios generales</span>
+					</div>
+					<div class="perfil-footer">
+						<span class="perfil-nivel">Complemento destino: <strong>Nivel 14</strong></span>
+						<a href="#" class="btn-detalle">Ver perfil completo</a>
+					</div>
+				</div>
+
+				<div class="perfil-card">
+					<div class="perfil-card-top">
+						<span class="perfil-grupo grupo-badge grupo-a1">Grupo A1</span>
+						<span style="font-size:0.8rem; color:#aaa;">Nivel 28</span>
+					</div>
+					<h3>Técnico/a Superior de Sistemas y TIC</h3>
+					<p>Gestiona, desarrolla y mantiene los sistemas de información, infraestructura TIC y proyectos de transformación digital.</p>
+					<div class="perfil-tags">
+						<span class="perfil-tag">Ingeniería Informática</span>
+						<span class="perfil-tag">Ciberseguridad</span>
+						<span class="perfil-tag">Administración de sistemas</span>
+					</div>
+					<div class="perfil-footer">
+						<span class="perfil-nivel">Complemento destino: <strong>Nivel 28</strong></span>
+						<a href="#" class="btn-detalle">Ver perfil completo</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ======================= TAB 3: RETRIBUCIONES ======================= -->
+		<div id="panel-retribuciones" class="tab-panel" role="tabpanel">
+
+			<div class="section-header">
+				<h2><i class="fa-solid fa-euro-sign"></i> Retribuciones Anuales</h2>
+				<div class="retrib-year-selector">
+					<span style="font-size:0.9rem; color:#666; margin-right:0.5rem;">Año:</span>
+					<button class="year-btn active" data-year="2026">2026</button>
+					<button class="year-btn" data-year="2025">2025</button>
+					<button class="year-btn" data-year="2024">2024</button>
+				</div>
+			</div>
+
+			<div class="retrib-note" style="margin-bottom: 1.5rem; margin-top: 0;">
+				<i class="fa-solid fa-circle-info"></i>
+				<span>Las retribuciones indicadas son brutas anuales conforme a la normativa vigente de la Junta de Andalucía para el Personal de Administración y Servicios (PAS) de las Universidades Públicas Andaluzas. Actualizado a <strong>enero 2026</strong>.</span>
+			</div>
+
+			<div class="retrib-container">
+				<!-- Sueldo base -->
+				<div class="retrib-card">
+					<div class="retrib-card-header">
+						<i class="fa-solid fa-wallet"></i>
+						<h3>Sueldo Base Anual</h3>
+					</div>
+					<table class="retrib-table">
+						<thead>
+							<tr><th>Grupo / Subgrupo</th><th>Sueldo base bruto anual</th></tr>
+						</thead>
+						<tbody>
+							<tr><td><span class="grupo-badge grupo-a1">A1</span> Subgrupo A1</td><td>17.740,88 €</td></tr>
+							<tr><td><span class="grupo-badge grupo-a2">A2</span> Subgrupo A2</td><td>14.843,08 €</td></tr>
+							<tr><td><span class="grupo-badge grupo-b">B</span> Grupo B</td><td>12.682,48 €</td></tr>
+							<tr><td><span class="grupo-badge grupo-c1">C1</span> Subgrupo C1</td><td>11.177,24 €</td></tr>
+							<tr><td><span class="grupo-badge grupo-c2">C2</span> Subgrupo C2</td><td>9.172,68 €</td></tr>
+						</tbody>
+					</table>
+				</div>
+
+				<!-- Complemento de destino -->
+				<div class="retrib-card">
+					<div class="retrib-card-header">
+						<i class="fa-solid fa-layer-group"></i>
+						<h3>Complemento de Destino</h3>
+					</div>
+					<table class="retrib-table">
+						<thead>
+							<tr><th>Nivel</th><th>Importe bruto anual</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>Nivel 28</td><td>12.834,96 €</td></tr>
+							<tr><td>Nivel 26</td><td>11.340,72 €</td></tr>
+							<tr><td>Nivel 24</td><td>10.022,64 €</td></tr>
+							<tr><td>Nivel 22</td><td>8.851,92 €</td></tr>
+							<tr><td>Nivel 20</td><td>7.781,88 €</td></tr>
+							<tr><td>Nivel 18</td><td>6.881,16 €</td></tr>
+							<tr><td>Nivel 16</td><td>6.181,56 €</td></tr>
+							<tr><td>Nivel 14</td><td>5.550,12 €</td></tr>
+						</tbody>
+					</table>
+				</div>
+
+				<!-- Trienios -->
+				<div class="retrib-card">
+					<div class="retrib-card-header">
+						<i class="fa-solid fa-calendar-days"></i>
+						<h3>Trienios</h3>
+					</div>
+					<table class="retrib-table">
+						<thead>
+							<tr><th>Grupo / Subgrupo</th><th>Importe por trienio (anual)</th></tr>
+						</thead>
+						<tbody>
+							<tr><td><span class="grupo-badge grupo-a1">A1</span> Subgrupo A1</td><td>1.431,00 €</td></tr>
+							<tr><td><span class="grupo-badge grupo-a2">A2</span> Subgrupo A2</td><td>1.195,32 €</td></tr>
+							<tr><td><span class="grupo-badge grupo-b">B</span> Grupo B</td><td>959,40 €</td></tr>
+							<tr><td><span class="grupo-badge grupo-c1">C1</span> Subgrupo C1</td><td>855,72 €</td></tr>
+							<tr><td><span class="grupo-badge grupo-c2">C2</span> Subgrupo C2</td><td>617,40 €</td></tr>
+						</tbody>
+					</table>
+				</div>
+
+				<!-- Complemento específico -->
+				<div class="retrib-card">
+					<div class="retrib-card-header">
+						<i class="fa-solid fa-star"></i>
+						<h3>Complemento Específico (orientativo)</h3>
+					</div>
+					<table class="retrib-table">
+						<thead>
+							<tr><th>Perfil de puesto</th><th>Importe bruto anual</th></tr>
+						</thead>
+						<tbody>
+							<tr><td>Gestión general A1/A2</td><td>desde 9.200,00 €</td></tr>
+							<tr><td>Jefatura de unidad</td><td>desde 11.500,00 €</td></tr>
+							<tr><td>Técnico/a especialista</td><td>desde 7.800,00 €</td></tr>
+							<tr><td>Administrativo/a</td><td>desde 6.500,00 €</td></tr>
+							<tr><td>Auxiliar de servicios</td><td>desde 4.800,00 €</td></tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="retrib-note">
+				<i class="fa-solid fa-triangle-exclamation"></i>
+				<span>Los importes son orientativos y pueden variar en función de las pagas extraordinarias, complementos autonómicos y acuerdos específicos. Consulta la normativa completa en el Portal de Transparencia o contacta con la Unidad de Nóminas.</span>
+			</div>
+		</div>
+
+		<!-- ======================= TAB 4: NÓMINA ======================= -->
+		<div id="panel-nomina" class="tab-panel" role="tabpanel">
+
+			<div class="section-header">
+				<h2><i class="fa-solid fa-file-invoice-dollar"></i> Consulta de Nómina</h2>
+			</div>
+
+			<div class="nomina-grid">
+				<!-- Acceso directo -->
+				<a href="#" class="nomina-access-card">
+					<div class="nomina-access-icon"><i class="fa-solid fa-file-arrow-down"></i></div>
+					<h3>Descarga tu nómina</h3>
+					<p>Accede a todas tus nóminas en formato PDF, clasificadas por mes y año desde el año en curso.</p>
+					<span class="btn-solid">Acceder a mis nóminas</span>
+				</a>
+				<a href="#" class="nomina-access-card">
+					<div class="nomina-access-icon" style="background:rgba(0,158,147,0.08);color:var(--us-teal);"><i class="fa-solid fa-chart-pie"></i></div>
+					<h3>Resumen retributivo</h3>
+					<p>Consulta el desglose de tus retribuciones mensuales, trienios, complementos y deducciones aplicadas.</p>
+					<span class="btn-solid" style="background:var(--us-teal);">Ver resumen</span>
+				</a>
+
+				<!-- Histórico de nóminas -->
+				<div class="nomina-history-card">
+					<div class="nomina-history-header">
+						<h3><i class="fa-solid fa-clock-rotate-left"></i> Últimas nóminas</h3>
+						<a href="#" class="btn-outline" style="font-size:0.85rem; padding:0.5rem 1rem;"><i class="fa-solid fa-history"></i> Ver historial completo</a>
+					</div>
+					<div class="nomina-row">
+						<span class="nomina-mes">Abril 2026</span>
+						<span class="nomina-tipo">Nómina mensual ordinaria</span>
+						<span class="nomina-importe">2.453,18 €</span>
+						<div class="nomina-actions">
+							<button class="btn-icon" title="Descargar PDF"><i class="fa-solid fa-file-pdf"></i></button>
+							<button class="btn-icon" title="Ver desglose"><i class="fa-solid fa-eye"></i></button>
+						</div>
+					</div>
+					<div class="nomina-row">
+						<span class="nomina-mes">Marzo 2026</span>
+						<span class="nomina-tipo">Nómina mensual ordinaria</span>
+						<span class="nomina-importe">2.453,18 €</span>
+						<div class="nomina-actions">
+							<button class="btn-icon" title="Descargar PDF"><i class="fa-solid fa-file-pdf"></i></button>
+							<button class="btn-icon" title="Ver desglose"><i class="fa-solid fa-eye"></i></button>
+						</div>
+					</div>
+					<div class="nomina-row">
+						<span class="nomina-mes">Febrero 2026</span>
+						<span class="nomina-tipo">Nómina mensual ordinaria</span>
+						<span class="nomina-importe">2.453,18 €</span>
+						<div class="nomina-actions">
+							<button class="btn-icon" title="Descargar PDF"><i class="fa-solid fa-file-pdf"></i></button>
+							<button class="btn-icon" title="Ver desglose"><i class="fa-solid fa-eye"></i></button>
+						</div>
+					</div>
+					<div class="nomina-row">
+						<span class="nomina-mes">Enero 2026</span>
+						<span class="nomina-tipo">Nómina mensual ordinaria</span>
+						<span class="nomina-importe">2.453,18 €</span>
+						<div class="nomina-actions">
+							<button class="btn-icon" title="Descargar PDF"><i class="fa-solid fa-file-pdf"></i></button>
+							<button class="btn-icon" title="Ver desglose"><i class="fa-solid fa-eye"></i></button>
+						</div>
+					</div>
+					<div class="nomina-row">
+						<span class="nomina-mes">Dic 2025 <span style="font-size:0.75rem;color:var(--us-gold-light);font-weight:700;">EXTRA</span></span>
+						<span class="nomina-tipo">Paga extraordinaria diciembre</span>
+						<span class="nomina-importe">2.453,18 €</span>
+						<div class="nomina-actions">
+							<button class="btn-icon" title="Descargar PDF"><i class="fa-solid fa-file-pdf"></i></button>
+							<button class="btn-icon" title="Ver desglose"><i class="fa-solid fa-eye"></i></button>
+						</div>
+					</div>
+					<div class="nomina-row">
+						<span class="nomina-mes">Noviembre 2025</span>
+						<span class="nomina-tipo">Nómina mensual ordinaria</span>
+						<span class="nomina-importe">2.403,18 €</span>
+						<div class="nomina-actions">
+							<button class="btn-icon" title="Descargar PDF"><i class="fa-solid fa-file-pdf"></i></button>
+							<button class="btn-icon" title="Ver desglose"><i class="fa-solid fa-eye"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div><!-- /dashboard-container -->
+
+	<footer class="intranet-footer" style="margin-top: 4rem;">
+		<div class="footer-grid">
+			<div class="footer-logo">
+				<img src="../assets/img/logo_us_neg_0.png" alt="Logo Universidad de Sevilla">
+			</div>
+			<div class="footer-links-container">
+				<div class="footer-column">
+					<h4>Enlaces de Interés</h4>
+					<a href="https://www.us.es/">Universidad de Sevilla</a>
+					<a href="#">Área Personal Docente</a>
+					<a href="https://sede.us.es/">Sede Electrónica</a>
+				</div>
+				<div class="footer-column">
+					<h4>Información Pública</h4>
+					<a href="https://transparencia.us.es/">Portal de Transparencia</a>
+					<a href="#">Tablón de Anuncios</a>
+					<a href="https://osi.us.es/politicas-y-normativas/politica-de-proteccion-de-datos">Protección de Datos</a>
+				</div>
+			</div>
+		</div>
+		<div class="copyright">
+			&copy; 2026 Universidad de Sevilla - Dirección de Recursos Humanos - Intranet de Personal.
+		</div>
+	</footer>
+
+	<script>
+		// ---- Tab switching ----
+		const tabBtns = document.querySelectorAll('.tab-btn');
+		const tabPanels = document.querySelectorAll('.tab-panel');
+
+		tabBtns.forEach(btn => {
+			btn.addEventListener('click', () => {
+				const target = btn.dataset.tab;
+
+				tabBtns.forEach(b => {
+					b.classList.remove('active');
+					b.setAttribute('aria-selected', 'false');
+				});
+				tabPanels.forEach(p => p.classList.remove('active'));
+
+				btn.classList.add('active');
+				btn.setAttribute('aria-selected', 'true');
+				document.getElementById('panel-' + target).classList.add('active');
+			});
+		});
+
+		// ---- RPT Live Search ----
+		const searchInput = document.getElementById('rpt-search-input');
+		if (searchInput) {
+			searchInput.addEventListener('input', () => {
+				const query = searchInput.value.toLowerCase();
+				const rows = document.querySelectorAll('#rpt-table tbody tr');
+				rows.forEach(row => {
+					row.style.display = row.textContent.toLowerCase().includes(query) ? '' : 'none';
+				});
+			});
+		}
+
+		// ---- Year selector (visual only) ----
+		document.querySelectorAll('.year-btn').forEach(btn => {
+			btn.addEventListener('click', () => {
+				document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+				btn.classList.add('active');
+			});
+		});
+
+		// ---- Mobile Menu ----
+		document.addEventListener('DOMContentLoaded', () => {
+			const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+			const navLinks = document.getElementById('main-nav');
+
+			if (mobileMenuToggle && navLinks) {
+				mobileMenuToggle.addEventListener('click', () => {
+					const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+					mobileMenuToggle.setAttribute('aria-expanded', !isExpanded);
+					navLinks.classList.toggle('active');
+					mobileMenuToggle.classList.toggle('active');
+				});
+			}
+		});
+	</script>
+</body>
+</html>
